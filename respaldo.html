@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Respaldo de datos — Antojito's Cakes</title>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Bodoni+Moda:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.cdnfonts.com/css/angel-club" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="header">
+  <div class="header-stripe"></div>
+  <div class="header-row">
+    <div class="header-brand">
+      <img src="imagenes/logo_badge.png" alt="Antojito's Cakes">
+      <div>
+        <div class="header-title">Antojito's Cakes</div>
+        <div class="header-sub">Módulo de Ventas</div>
+      </div>
+    </div>
+    <div class="header-user">
+      <div class="header-user-name" id="headerUserName">—<span class="header-user-role" id="headerUserRole"></span></div>
+      <button class="logout-btn" onclick="logout()">Salir</button>
+    </div>
+  </div>
+</header>
+
+<nav class="nav-wrap">
+  <a href="ventas.html" class="nav-tab" data-nav-section="ventas">🧾 Ventas</a>
+  <a href="clientes.html" class="nav-tab" data-nav-section="clientes">👥 Clientes</a>
+  <a href="precios.html" class="nav-tab" data-nav-section="precios">💲 Precios</a>
+  <a href="inventario.html" class="nav-tab" data-nav-section="inventario">📦 Inventario</a>
+  <a href="promociones.html" class="nav-tab" data-nav-section="promociones">🎁 Promociones</a>
+  <a href="pedidos.html" class="nav-tab" data-nav-section="pedidos">📅 Pedidos</a>
+  <a href="historial.html" class="nav-tab" data-nav-section="historial">📖 Historial</a>
+  <a href="reportes.html" class="nav-tab" data-nav-section="reportes">📊 Reportes</a>
+  <a href="auditoria.html" class="nav-tab" data-nav-section="auditoria">📋 Auditoría</a>
+  <a href="respaldo.html" class="nav-tab active" data-nav-section="respaldo">💾 Respaldo</a>
+</nav>
+
+<div class="page">
+
+  <div class="panel">
+    <div class="panel-title">Estado actual de los datos</div>
+    <div id="estadoActual" style="font-size:13.5px; color:var(--gray); line-height:1.9;"></div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-title">Descargar respaldo</div>
+    <p style="font-size:13px; color:var(--gray); margin-bottom:14px;">
+      Genera un archivo <code>.json</code> con todos los usuarios, clientes,
+      ventas, el banner y las reglas de promoción guardados hasta ahora.
+      Guarda ese archivo dentro de la carpeta del módulo (por ejemplo, en una
+      subcarpeta <code>Backups/</code>) o donde prefieras, para tener una
+      copia local de seguridad.
+    </p>
+    <button class="btn-primary" id="btnExportar" style="max-width:260px">⬇️ Descargar respaldo ahora</button>
+  </div>
+
+  <div class="panel">
+    <div class="panel-title">Restaurar desde un archivo</div>
+    <p style="font-size:13px; color:var(--gray); margin-bottom:14px;">
+      Selecciona un archivo <code>.json</code> generado previamente con el
+      botón de arriba. <b>Esto reemplaza todos los datos actuales</b>
+      (usuarios, clientes, ventas, banner y reglas de promoción) por los del
+      archivo — se te pedirá confirmación antes de aplicar el cambio.
+    </p>
+    <input type="file" id="inputRestaurar" accept="application/json,.json" style="margin-bottom:12px;">
+    <div>
+      <button class="btn-danger" id="btnRestaurar" disabled>Restaurar este archivo</button>
+    </div>
+    <div id="restaurarInfo" style="font-size:12.5px; margin-top:10px;"></div>
+  </div>
+
+  <div class="panel" id="demoPanel">
+    <div class="panel-title">🎬 Datos de ejemplo para demostración</div>
+    <p style="font-size:13px; color:var(--gray); margin-bottom:14px;">
+      Ponle 5 unidades de stock a <b>todas</b> las presentaciones del catálogo
+      (base y las agregadas en Inventario) y agrega 2 clientes y 2 pedidos de
+      ejemplo (marcados "(demo)"), para hacer pruebas o presentaciones sin
+      cargar datos a mano. "Quitar datos de ejemplo" devuelve el stock
+      exactamente a como estaba antes de cargarlos y borra los clientes y
+      pedidos de ejemplo — no afecta ningún otro dato real.
+    </p>
+    <div style="display:flex; gap:10px; flex-wrap:wrap;">
+      <button class="btn-primary" id="btnCargarDemo" style="max-width:240px">Cargar datos de ejemplo</button>
+      <button class="btn-danger" id="btnQuitarDemo" style="max-width:240px">Quitar datos de ejemplo</button>
+    </div>
+  </div>
+  <!-- ═══════════════ FIN BLOQUE DE DATOS DE DEMOSTRACIÓN ═══════════════ -->
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="js/store.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/productos.js"></script>
+<script src="js/promos.js"></script>
+<script src="js/backup.js"></script>
+<script src="js/respaldo.js"></script>
+<!-- Bloque de datos de demostración (ver panel #demoPanel más arriba) — borrar esta línea si se quita esa funcionalidad. -->
+<script src="js/demo.js"></script>
+</body>
+</html>

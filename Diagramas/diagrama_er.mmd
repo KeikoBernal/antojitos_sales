@@ -1,0 +1,76 @@
+erDiagram
+    USUARIOS {
+        string username PK
+        string nombre
+        string rol
+        string passwordHash
+    }
+    CLIENTES {
+        string id PK
+        string nombre
+        string cedula UK
+        string telefono
+        string email
+    }
+    VENTAS {
+        string id PK
+        string fecha
+        string cajero FK
+        string clienteId FK
+        number total
+    }
+    VENTA_ITEMS {
+        string ventaId FK
+        string productId FK
+        string name
+        string variante
+        number precio
+        number qty
+        boolean gratis
+    }
+    PRODUCTOS {
+        string id PK
+        string cat FK
+        string name
+        string img
+        string badgeColor
+    }
+    PRODUCTO_VARIANTES {
+        string productId FK
+        number variantIdx
+        string label
+        number price
+    }
+    PRECIO_OVERRIDES {
+        string productId FK
+        number variantIdx
+        number precio
+    }
+    CATEGORIAS {
+        string cat PK
+        string label
+    }
+    PROMO_REGLAS {
+        string id PK
+        boolean active
+        string triggerProductId FK
+        number buyQty
+        string rewardProductId FK
+        number rewardQty
+    }
+    BANNER_CONFIG {
+        boolean active
+        string title
+        string subtitle
+        string theme
+    }
+
+    USUARIOS ||--o{ VENTAS : "registra"
+    CLIENTES ||--o{ VENTAS : "realiza"
+    VENTAS ||--|{ VENTA_ITEMS : "contiene"
+    PRODUCTOS ||--o{ VENTA_ITEMS : "vendido_en"
+    PRODUCTOS ||--|{ PRODUCTO_VARIANTES : "tiene"
+    PRODUCTO_VARIANTES ||--o| PRECIO_OVERRIDES : "puede_tener"
+    CATEGORIAS ||--o{ PRODUCTOS : "agrupa"
+    PRODUCTOS ||--o{ PROMO_REGLAS : "es_activador"
+    PRODUCTOS ||--o{ PROMO_REGLAS : "es_regalo"

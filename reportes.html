@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reportes — Antojito's Cakes</title>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Bodoni+Moda:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.cdnfonts.com/css/angel-club" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="header">
+  <div class="header-stripe"></div>
+  <div class="header-row">
+    <div class="header-brand">
+      <img src="imagenes/logo_badge.png" alt="Antojito's Cakes">
+      <div>
+        <div class="header-title">Antojito's Cakes</div>
+        <div class="header-sub">Módulo de Ventas</div>
+      </div>
+    </div>
+    <div class="header-user">
+      <div class="header-user-name" id="headerUserName">—<span class="header-user-role" id="headerUserRole"></span></div>
+      <button class="logout-btn" onclick="logout()">Salir</button>
+    </div>
+  </div>
+</header>
+
+<nav class="nav-wrap">
+  <a href="ventas.html" class="nav-tab" data-nav-section="ventas">🧾 Ventas</a>
+  <a href="clientes.html" class="nav-tab" data-nav-section="clientes">👥 Clientes</a>
+  <a href="precios.html" class="nav-tab" data-nav-section="precios">💲 Precios</a>
+  <a href="inventario.html" class="nav-tab" data-nav-section="inventario">📦 Inventario</a>
+  <a href="promociones.html" class="nav-tab" data-nav-section="promociones">🎁 Promociones</a>
+  <a href="pedidos.html" class="nav-tab" data-nav-section="pedidos">📅 Pedidos</a>
+  <a href="historial.html" class="nav-tab" data-nav-section="historial">📖 Historial</a>
+  <a href="reportes.html" class="nav-tab active" data-nav-section="reportes">📊 Reportes</a>
+  <a href="auditoria.html" class="nav-tab" data-nav-section="auditoria">📋 Auditoría</a>
+  <a href="respaldo.html" class="nav-tab" data-nav-section="respaldo">💾 Respaldo</a>
+</nav>
+
+<div class="page">
+
+  <div class="panel">
+    <div class="panel-title">Periodo del reporte</div>
+    <div class="form-row-grid">
+      <div class="form-row"><label for="rDesde">Desde</label><input type="date" id="rDesde"></div>
+      <div class="form-row"><label for="rHasta">Hasta</label><input type="date" id="rHasta"></div>
+    </div>
+    <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:14px;">
+      <button class="nav-tab active" data-periodo="hoy">Hoy</button>
+      <button class="nav-tab" data-periodo="7">Últimos 7 días</button>
+      <button class="nav-tab" data-periodo="30">Últimos 30 días</button>
+      <button class="nav-tab" data-periodo="todo">Todo el historial</button>
+    </div>
+    <div style="display:flex; gap:10px; flex-wrap:wrap;">
+      <button class="btn-small" id="btnBuscar">Generar reporte</button>
+      <button class="btn-danger" id="btnLimpiar">Limpiar filtros</button>
+      <button class="btn-small" id="btnPDF">⬇️ Descargar PDF del periodo</button>
+    </div>
+    <div id="periodoResumen" style="font-size:12.5px; color:var(--gray); margin-top:10px;"></div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-title">🏆 Productos más vendidos</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>#</th><th>Producto</th><th>Categoría</th><th>Unidades vendidas</th><th>Ingresos</th></tr></thead>
+        <tbody id="masVendidosBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-title">📉 Productos menos vendidos</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>#</th><th>Producto</th><th>Categoría</th><th>Unidades vendidas</th><th>Ingresos</th></tr></thead>
+        <tbody id="menosVendidosBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-title">💡 Sugerencias de promoción</div>
+    <div id="sugerenciasWrap"></div>
+  </div>
+
+</div>
+
+<div id="printArea"></div>
+
+<style>
+  .sugerencia-card { background:var(--pink-pale); border-radius:14px; padding:14px 16px; margin-bottom:12px; display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+  .sugerencia-text { font-size:13px; line-height:1.5; max-width:560px; }
+  .sugerencia-text b { color:var(--pink-dark); }
+</style>
+
+<script src="js/store.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/productos.js"></script>
+<script src="js/promos.js"></script>
+<script src="js/reportes.js"></script>
+</body>
+</html>

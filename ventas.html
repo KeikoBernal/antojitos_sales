@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ventas — Antojito's Cakes</title>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Bodoni+Moda:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.cdnfonts.com/css/angel-club" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="header">
+  <div class="header-stripe"></div>
+  <div class="header-row">
+    <div class="header-brand">
+      <img src="imagenes/logo_badge.png" alt="Antojito's Cakes">
+      <div>
+        <div class="header-title">Antojito's Cakes</div>
+        <div class="header-sub">Módulo de Ventas</div>
+      </div>
+    </div>
+    <div class="header-user">
+      <div class="header-user-name" id="headerUserName">—<span class="header-user-role" id="headerUserRole"></span></div>
+      <button class="logout-btn" onclick="logout()">Salir</button>
+    </div>
+  </div>
+</header>
+
+<nav class="nav-wrap">
+  <a href="ventas.html" class="nav-tab active" data-nav-section="ventas">🧾 Ventas</a>
+  <a href="clientes.html" class="nav-tab" data-nav-section="clientes">👥 Clientes</a>
+  <a href="precios.html" class="nav-tab" data-nav-section="precios">💲 Precios</a>
+  <a href="inventario.html" class="nav-tab" data-nav-section="inventario">📦 Inventario</a>
+  <a href="promociones.html" class="nav-tab" data-nav-section="promociones">🎁 Promociones</a>
+  <a href="pedidos.html" class="nav-tab" data-nav-section="pedidos">📅 Pedidos</a>
+  <a href="historial.html" class="nav-tab" data-nav-section="historial">📖 Historial</a>
+  <a href="reportes.html" class="nav-tab" data-nav-section="reportes">📊 Reportes</a>
+  <a href="auditoria.html" class="nav-tab" data-nav-section="auditoria">📋 Auditoría</a>
+  <a href="respaldo.html" class="nav-tab" data-nav-section="respaldo">💾 Respaldo</a>
+</nav>
+
+<div class="page">
+  <div id="promoBanner"></div>
+
+  <div class="search-box">
+    <input type="text" id="searchInput" placeholder="Buscar producto...">
+  </div>
+
+  <div id="catalogWrap"></div>
+</div>
+
+<!-- ── CARRITO ── -->
+<div class="cart-panel" id="cartPanel">
+  <div class="cart-handle" id="cartHandle">
+    <div class="cart-handle-left">
+      <div class="cart-count" id="cartCount">0</div>
+      <div class="cart-title">Carrito</div>
+    </div>
+    <div class="cart-total-preview" id="cartTotalPreview">$0.00</div>
+  </div>
+  <div class="cart-body" id="cartBody">
+    <div class="empty-cart">El carrito está vacío</div>
+  </div>
+  <div class="cart-footer">
+    <div class="cart-total-row"><span>Total</span><span class="amount" id="cartTotal">$0.00</span></div>
+    <div class="form-row">
+      <label>Cliente</label>
+      <input type="hidden" id="clienteSeleccionadoId" value="">
+      <div class="cliente-resumen">
+        <span id="clienteResumenTexto">Venta sin registrar cliente</span>
+        <button type="button" class="btn-small" id="agregarClienteBtn">+ Agregar cliente</button>
+        <button type="button" class="btn-danger" id="quitarClienteBtn" style="display:none;">Quitar</button>
+      </div>
+    </div>
+
+    <div style="display:flex; gap:10px; margin-top:14px;">
+      <button class="btn-danger" id="vaciarCarritoBtn" style="flex:1;">Vaciar carrito</button>
+      <button class="btn-primary" id="checkoutBtn" style="flex:2; margin:0;">Finalizar venta</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── AGREGAR CLIENTE (modal) ── -->
+<div class="overlay" id="clienteOverlay">
+  <div class="modal-box">
+    <div class="modal-box-title">Agregar cliente a la venta</div>
+    <div class="form-row">
+      <label for="ventaClienteCedula">Cédula</label>
+      <input type="text" id="ventaClienteCedula" inputmode="numeric" pattern="[0-9]*" maxlength="15" placeholder="Ej: 12345678">
+    </div>
+    <div id="ventaClienteEstado" class="cliente-estado"></div>
+    <div class="form-row">
+      <label for="ventaClienteNombre">Nombre completo</label>
+      <input type="text" id="ventaClienteNombre">
+    </div>
+    <div class="form-row">
+      <label for="ventaClienteTelefono">Teléfono</label>
+      <input type="text" id="ventaClienteTelefono" inputmode="numeric" pattern="[0-9]*" maxlength="15">
+    </div>
+    <button type="button" class="btn-primary" id="guardarClienteVentaBtn">Agregar cliente a esta venta</button>
+    <button type="button" class="btn-secondary" id="cerrarClienteModalBtn">Cancelar</button>
+  </div>
+</div>
+
+<!-- ── RECIBO ── -->
+<div class="overlay" id="receiptOverlay">
+  <div class="receipt-modal">
+    <div class="receipt-icon">🧁</div>
+    <div class="receipt-title">¡Venta registrada!</div>
+    <div class="receipt-sub" id="receiptSub"></div>
+    <div class="receipt-list" id="receiptList"></div>
+    <div class="receipt-total"><span>Total</span><span id="receiptTotal"></span></div>
+    <button class="btn-primary" onclick="cerrarRecibo()">Nueva venta</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="js/store.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/productos.js"></script>
+<script src="js/promos.js"></script>
+<script src="js/ventas.js"></script>
+</body>
+</html>

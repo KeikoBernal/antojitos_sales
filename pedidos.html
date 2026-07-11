@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pedidos — Antojito's Cakes</title>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Bodoni+Moda:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.cdnfonts.com/css/angel-club" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="header">
+  <div class="header-stripe"></div>
+  <div class="header-row">
+    <div class="header-brand">
+      <img src="imagenes/logo_badge.png" alt="Antojito's Cakes">
+      <div>
+        <div class="header-title">Antojito's Cakes</div>
+        <div class="header-sub">Módulo de Ventas</div>
+      </div>
+    </div>
+    <div class="header-user">
+      <div class="header-user-name" id="headerUserName">—<span class="header-user-role" id="headerUserRole"></span></div>
+      <button class="logout-btn" onclick="logout()">Salir</button>
+    </div>
+  </div>
+</header>
+
+<nav class="nav-wrap">
+  <a href="ventas.html" class="nav-tab" data-nav-section="ventas">🧾 Ventas</a>
+  <a href="clientes.html" class="nav-tab" data-nav-section="clientes">👥 Clientes</a>
+  <a href="precios.html" class="nav-tab" data-nav-section="precios">💲 Precios</a>
+  <a href="inventario.html" class="nav-tab" data-nav-section="inventario">📦 Inventario</a>
+  <a href="promociones.html" class="nav-tab" data-nav-section="promociones">🎁 Promociones</a>
+  <a href="pedidos.html" class="nav-tab active" data-nav-section="pedidos">📅 Pedidos</a>
+  <a href="historial.html" class="nav-tab" data-nav-section="historial">📖 Historial</a>
+  <a href="reportes.html" class="nav-tab" data-nav-section="reportes">📊 Reportes</a>
+  <a href="auditoria.html" class="nav-tab" data-nav-section="auditoria">📋 Auditoría</a>
+  <a href="respaldo.html" class="nav-tab" data-nav-section="respaldo">💾 Respaldo</a>
+</nav>
+
+<div class="page">
+
+  <div class="panel">
+    <div class="panel-title" id="pedidoFormTitle">Nuevo pedido</div>
+    <form id="pedidoForm">
+      <input type="hidden" id="pedidoId" value="">
+      <div class="form-error" id="pedidoError"></div>
+
+      <div class="form-row">
+        <label for="pedidoClienteCedula">Cédula del cliente </label>
+        <input type="text" id="pedidoClienteCedula" inputmode="numeric" pattern="[0-9]*" maxlength="15" placeholder="Ej: 12345678">
+      </div>
+      <div id="pedidoClienteEstado" class="cliente-estado"></div>
+      <div class="form-row-grid">
+        <div class="form-row">
+          <label for="pedidoClienteNombre">Nombre del cliente</label>
+          <input type="text" id="pedidoClienteNombre" required>
+        </div>
+        <div class="form-row">
+          <label for="pedidoClienteTelefono">Teléfono</label>
+          <input type="text" id="pedidoClienteTelefono" inputmode="numeric" pattern="[0-9]*" maxlength="15">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <label for="pedidoDescripcion">Descripción del pedido</label>
+        <textarea id="pedidoDescripcion" rows="2" placeholder="Ej: Torta Red Velvet 20 porciones, temática cumpleaños" required></textarea>
+      </div>
+
+      <div class="form-row">
+        <label>Tipo de producto</label>
+        <div class="tipo-producto-row">
+          <label class="radio-inline"><input type="radio" name="pedidoTipoProducto" value="personalizado" id="pedidoTipoPersonalizado" checked> Personalizado (fuera de catálogo)</label>
+          <label class="radio-inline"><input type="radio" name="pedidoTipoProducto" value="catalogo" id="pedidoTipoCatalogo"> Del catálogo (reserva stock)</label>
+        </div>
+      </div>
+
+      <div id="pedidoCatalogoWrap" style="display:none;">
+        <div class="form-row-grid">
+          <div class="form-row">
+            <label for="pedidoProductoSelect">Producto y presentación</label>
+            <select id="pedidoProductoSelect"></select>
+          </div>
+          <div class="form-row">
+            <label for="pedidoCantidadProducto">Cantidad</label>
+            <input type="number" id="pedidoCantidadProducto" min="1" value="1">
+          </div>
+        </div>
+        <div id="pedidoStockInfo" class="cliente-estado"></div>
+      </div>
+
+      <div class="form-row-grid">
+        <div class="form-row">
+          <label for="pedidoFecha">Fecha de entrega</label>
+          <input type="date" id="pedidoFecha" required>
+        </div>
+        <div class="form-row">
+          <label for="pedidoHora">Hora de entrega (opcional)</label>
+          <input type="time" id="pedidoHora">
+        </div>
+      </div>
+
+      <div class="form-row-grid">
+        <div class="form-row">
+          <label for="pedidoMonto">Monto total ($)</label>
+          <input type="number" id="pedidoMonto" min="0" step="0.01">
+        </div>
+        <div class="form-row">
+          <label for="pedidoAbono">Abono / adelanto ($)</label>
+          <input type="number" id="pedidoAbono" min="0" step="0.01">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <label for="pedidoNotas">Notas (opcional)</label>
+        <textarea id="pedidoNotas" rows="2"></textarea>
+      </div>
+
+      <div style="display:flex; gap:10px;">
+        <button type="submit" class="btn-primary" id="pedidoSubmitBtn" style="max-width:220px">Guardar pedido</button>
+        <button type="button" class="btn-secondary" id="pedidoCancelBtn" style="max-width:180px; display:none;">Cancelar edición</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="panel" id="alertasPanel">
+    <div class="panel-title">⏰ Pedidos próximos (48 horas o menos)</div>
+    <div id="alertasWrap"></div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-title">
+      <span id="calendarioTitulo">—</span>
+      <div style="display:flex; gap:6px;">
+        <button class="btn-small" id="calMesAnteriorBtn">‹</button>
+        <button class="btn-small" id="calHoyBtn">Hoy</button>
+        <button class="btn-small" id="calMesSiguienteBtn">›</button>
+      </div>
+    </div>
+    <div class="calendario-grid" id="calendarioGrid"></div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-title">Todos los pedidos</div>
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="Buscar por cliente o descripción...">
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Entrega</th><th>Cliente</th><th>Descripción</th><th>Producto reservado</th><th>Monto</th><th>Estado</th><th></th></tr>
+        </thead>
+        <tbody id="pedidosBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<style>
+  .form-row textarea { width:100%; padding:12px 14px; border-radius:12px; border:1.5px solid #F0D8EC; background:var(--pink-pale); font-family:'Poppins',sans-serif; font-size:14px; color:var(--dark); outline:none; resize:vertical; }
+  .form-row textarea:focus { border-color:var(--pink); background:#fff; }
+  .tipo-producto-row { display:flex; gap:16px; flex-wrap:wrap; }
+  .radio-inline { display:flex; align-items:center; gap:6px; font-size:13px; font-weight:400; text-transform:none; color:var(--dark); letter-spacing:normal; cursor:pointer; }
+  #pedidoCatalogoWrap { background:var(--pink-pale); border-radius:14px; padding:14px; margin-bottom:14px; }
+
+  .alerta-card { display:flex; justify-content:space-between; align-items:center; gap:12px; border-radius:14px; padding:12px 16px; margin-bottom:10px; flex-wrap:wrap; }
+  .alerta-card.vencido { background:#FCE4E4; border:1.5px solid #E74C3C; }
+  .alerta-card.urgente { background:#FFF3D6; border:1.5px solid #E8A83C; }
+  .alerta-titulo { font-weight:700; font-size:13.5px; }
+  .alerta-sub { font-size:12px; color:var(--gray); }
+  .alerta-tag { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; padding:3px 9px; border-radius:10px; white-space:nowrap; }
+  .alerta-card.vencido .alerta-tag { background:#E74C3C; color:#fff; }
+  .alerta-card.urgente .alerta-tag { background:#E8A83C; color:#fff; }
+
+  .produccion-badge { display:inline-block; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.3px; padding:3px 9px; border-radius:10px; white-space:nowrap; background:#FCE4E4; color:#C0392B; border:1px solid #E74C3C; }
+
+  .calendario-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:6px; }
+  .calendario-dow { text-align:center; font-size:10.5px; font-weight:700; color:var(--gray); text-transform:uppercase; padding:4px 0; }
+  .calendario-dia { min-height:64px; border-radius:10px; background:var(--pink-pale); padding:6px; font-size:11.5px; position:relative; cursor:default; }
+  .calendario-dia.vacio { background:transparent; }
+  .calendario-dia.hoy { border:2px solid var(--pink); }
+  .calendario-dia-num { font-weight:700; }
+  .calendario-dot-row { display:flex; flex-wrap:wrap; gap:3px; margin-top:4px; }
+  .calendario-dot { width:8px; height:8px; border-radius:50%; }
+  .calendario-dot.pendiente { background:var(--gold); }
+  .calendario-dot.completado { background:#27AE60; }
+  .calendario-dot.cancelado { background:var(--gray); }
+  .calendario-dot.vencido { background:#E74C3C; }
+
+  .estado-badge { font-size:10px; font-weight:700; padding:3px 9px; border-radius:10px; text-transform:uppercase; }
+  .estado-badge.pendiente { background:#FFF3D6; color:#8A6100; }
+  .estado-badge.completado { background:#E3F6E8; color:#1E7A3B; }
+  .estado-badge.cancelado { background:#eee; color:#777; }
+</style>
+
+<script src="js/store.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/productos.js"></script>
+<script src="js/pedidos.js"></script>
+</body>
+</html>

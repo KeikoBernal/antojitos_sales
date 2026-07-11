@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inventario — Antojito's Cakes</title>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Bodoni+Moda:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.cdnfonts.com/css/angel-club" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="header">
+  <div class="header-stripe"></div>
+  <div class="header-row">
+    <div class="header-brand">
+      <img src="imagenes/logo_badge.png" alt="Antojito's Cakes">
+      <div>
+        <div class="header-title">Antojito's Cakes</div>
+        <div class="header-sub">Módulo de Ventas</div>
+      </div>
+    </div>
+    <div class="header-user">
+      <div class="header-user-name" id="headerUserName">—<span class="header-user-role" id="headerUserRole"></span></div>
+      <button class="logout-btn" onclick="logout()">Salir</button>
+    </div>
+  </div>
+</header>
+
+<nav class="nav-wrap">
+  <a href="ventas.html" class="nav-tab" data-nav-section="ventas">🧾 Ventas</a>
+  <a href="clientes.html" class="nav-tab" data-nav-section="clientes">👥 Clientes</a>
+  <a href="precios.html" class="nav-tab" data-nav-section="precios">💲 Precios</a>
+  <a href="inventario.html" class="nav-tab active" data-nav-section="inventario">📦 Inventario</a>
+  <a href="promociones.html" class="nav-tab" data-nav-section="promociones">🎁 Promociones</a>
+  <a href="pedidos.html" class="nav-tab" data-nav-section="pedidos">📅 Pedidos</a>
+  <a href="historial.html" class="nav-tab" data-nav-section="historial">📖 Historial</a>
+  <a href="reportes.html" class="nav-tab" data-nav-section="reportes">📊 Reportes</a>
+  <a href="auditoria.html" class="nav-tab" data-nav-section="auditoria">📋 Auditoría</a>
+  <a href="respaldo.html" class="nav-tab" data-nav-section="respaldo">💾 Respaldo</a>
+</nav>
+
+<div class="page">
+
+  <div class="panel">
+    <div class="panel-title">Agregar producto nuevo</div>
+    <form id="productoForm">
+      <div class="form-error" id="productoError"></div>
+      <div class="form-row">
+        <label for="nuevoNombre">Nombre del producto</label>
+        <input type="text" id="nuevoNombre" required>
+      </div>
+      <div class="form-row">
+        <label for="nuevoCategoria">Categoría</label>
+        <select id="nuevoCategoria" required></select>
+      </div>
+      <div class="form-row">
+        <label for="nuevoImagen">Imagen (URL o ruta, opcional)</label>
+        <input type="text" id="nuevoImagen" placeholder="imagenes/mi_producto.png">
+      </div>
+
+      <div class="form-row">
+        <label>Presentaciones (al menos una)</label>
+        <div id="variantesWrap"></div>
+        <button type="button" class="btn-small" id="agregarVarianteBtn" style="margin-top:6px;">+ Agregar presentación</button>
+      </div>
+
+      <button type="submit" class="btn-primary" style="max-width:240px">Guardar producto</button>
+    </form>
+  </div>
+
+  <div class="search-box">
+    <input type="text" id="searchInput" placeholder="Buscar producto en el catálogo...">
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Producto</th><th>Categoría</th><th>Presentación</th><th>Precio</th><th>Stock</th><th>Origen</th><th></th></tr>
+      </thead>
+      <tbody id="inventarioBody"></tbody>
+    </table>
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<style>
+  .variante-row { display:grid; grid-template-columns:2fr 1fr 1fr auto; gap:8px; margin-bottom:8px; align-items:center; }
+  .variante-row input { padding:10px 12px; border-radius:10px; border:1.5px solid #F0D8EC; background:var(--pink-pale); font-family:'Poppins',sans-serif; font-size:13px; color:var(--dark); outline:none; }
+  .variante-row input:focus { border-color:var(--pink); background:#fff; }
+  .variante-remove-btn { border:none; background:none; color:var(--pink-dark); font-size:18px; cursor:pointer; line-height:1; padding:4px; }
+  .stock-input { width:80px; padding:8px 10px; border-radius:10px; border:1.5px solid #F0D8EC; background:var(--pink-pale); font-family:'Poppins',sans-serif; font-size:13px; outline:none; }
+  .stock-input:focus { border-color:var(--pink); background:#fff; }
+  .stock-sin-controlar { color:var(--gray); font-size:12px; }
+</style>
+
+<script src="js/store.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/productos.js"></script>
+<script src="js/inventario.js"></script>
+</body>
+</html>

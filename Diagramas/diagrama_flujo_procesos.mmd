@@ -1,0 +1,45 @@
+flowchart TD
+    Inicio(["Inicio"]) --> Login["Ingresar usuario y contraseña"]
+    Login --> ValidaCred{"¿Credenciales válidas?"}
+    ValidaCred -->|"No"| ErrorLogin["Mostrar 'Usuario o contraseña incorrectos'"]
+    ErrorLogin --> Login
+    ValidaCred -->|"Sí"| VentaSub
+
+    subgraph VentaSub["Proceso de venta (Cajero y Administrador)"]
+        direction TB
+        C1["Buscar y seleccionar productos del catálogo"]
+        C2["Agregar producto al carrito"]
+        C3{"¿Se cumple una regla<br/>'compra N, llévate M gratis'?"}
+        C4["Agregar regalo automático al carrito"]
+        C5{"¿Cliente ya registrado?"}
+        C6["Buscar cliente en la lista"]
+        C7["Registrar cliente nuevo<br/>(nombre, cédula, teléfono)"]
+        C8["Seleccionar cliente en la venta<br/>o continuar sin cliente"]
+        C9["Finalizar venta"]
+        C10["Guardar venta en el historial<br/>con el precio vigente de cada ítem"]
+        C11["Mostrar recibo en pantalla"]
+
+        C1 --> C2 --> C3
+        C3 -->|"Sí"| C4 --> C5
+        C3 -->|"No"| C5
+        C5 -->|"Sí"| C6 --> C8
+        C5 -->|"No"| C7 --> C8
+        C8 --> C9 --> C10 --> C11
+    end
+
+    VentaSub --> EsAdmin{"¿El usuario es Administrador?"}
+    EsAdmin -->|"Sí"| AdminSub
+
+    subgraph AdminSub["Procesos exclusivos del Administrador"]
+        direction TB
+        A1["Editar o restablecer el precio<br/>de una presentación de producto"]
+        A2["Configurar banner promocional<br/>y reglas de promoción"]
+        A3["Consultar historial de ventas<br/>y descargar PDF por periodo"]
+        A4["Consultar ranking de productos<br/>y descargar PDF del reporte"]
+        A5["Editar o eliminar un cliente registrado"]
+        A6["Descargar respaldo .json<br/>o restaurar datos desde un archivo"]
+    end
+
+    EsAdmin -->|"No, es Cajero"| Logout["Cerrar sesión"]
+    AdminSub --> Logout
+    Logout --> Fin(["Fin"])

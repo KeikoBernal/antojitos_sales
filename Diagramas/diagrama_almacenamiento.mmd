@@ -1,0 +1,36 @@
+flowchart TB
+    subgraph LS["localStorage (persistente en el navegador)"]
+        direction TB
+        U["anto_ventas_users<br/>Array de Usuario"]
+        C["anto_ventas_clientes<br/>Array de Cliente (con cedula)"]
+        V["anto_ventas_ventas<br/>Array de Venta"]
+        B["anto_ventas_banner<br/>Banner (objeto unico)"]
+        P["anto_ventas_promo_rules<br/>Array de ReglaPromocion"]
+        O["anto_ventas_price_overrides<br/>Mapa productId_variantIdx -> precio"]
+    end
+
+    subgraph SS["sessionStorage (se borra al cerrar pestana o navegador)"]
+        S["anto_ventas_session<br/>Sesion (objeto unico)"]
+        CT["anto_ventas_carrito_actual<br/>Array del carrito en curso"]
+    end
+
+    subgraph CAT["Catalogo estatico (definido en codigo, no en storage)"]
+        PR["PRODUCTOS []  -- js/productos.js"]
+        CG["CATEGORIAS [] -- js/productos.js"]
+    end
+
+    subgraph BK["Respaldo manual (archivo .json fuera del navegador)"]
+        F["antojitos_ventas_backup_AAAA-MM-DD_HHMM.json<br/>{ app, version, exportadoEn, data:{USERS,CUSTOMERS,SALES,BANNER,PROMO_RULES,PRICE_OVERRIDES} }<br/>guardado donde el usuario elija (ej. carpeta Backups/)"]
+    end
+
+    V -->|clienteId referencia a| C
+    V -->|cajero referencia a| U
+    V -->|items.productId referencia a| PR
+    P -->|triggerProductId / rewardProductId| PR
+    O -->|productId_variantIdx referencia a| PR
+    PR -->|cat referencia a| CG
+    S -.->|copia de sesion de| U
+    CT -->|productId / variantIdx referencia a| PR
+
+    LS -->|"exportarRespaldo() — respaldo.html"| F
+    F -->|"restaurarRespaldo() — sobrescribe tras confirmacion"| LS

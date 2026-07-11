@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Historial de Ventas — Antojito's Cakes</title>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Bodoni+Moda:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.cdnfonts.com/css/angel-club" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="header">
+  <div class="header-stripe"></div>
+  <div class="header-row">
+    <div class="header-brand">
+      <img src="imagenes/logo_badge.png" alt="Antojito's Cakes">
+      <div>
+        <div class="header-title">Antojito's Cakes</div>
+        <div class="header-sub">Módulo de Ventas</div>
+      </div>
+    </div>
+    <div class="header-user">
+      <div class="header-user-name" id="headerUserName">—<span class="header-user-role" id="headerUserRole"></span></div>
+      <button class="logout-btn" onclick="logout()">Salir</button>
+    </div>
+  </div>
+</header>
+
+<nav class="nav-wrap">
+  <a href="ventas.html" class="nav-tab" data-nav-section="ventas">🧾 Ventas</a>
+  <a href="clientes.html" class="nav-tab" data-nav-section="clientes">👥 Clientes</a>
+  <a href="precios.html" class="nav-tab" data-nav-section="precios">💲 Precios</a>
+  <a href="inventario.html" class="nav-tab" data-nav-section="inventario">📦 Inventario</a>
+  <a href="promociones.html" class="nav-tab" data-nav-section="promociones">🎁 Promociones</a>
+  <a href="pedidos.html" class="nav-tab" data-nav-section="pedidos">📅 Pedidos</a>
+  <a href="historial.html" class="nav-tab active" data-nav-section="historial">📖 Historial</a>
+  <a href="reportes.html" class="nav-tab" data-nav-section="reportes">📊 Reportes</a>
+  <a href="auditoria.html" class="nav-tab" data-nav-section="auditoria">📋 Auditoría</a>
+  <a href="respaldo.html" class="nav-tab" data-nav-section="respaldo">💾 Respaldo</a>
+</nav>
+
+<div class="page">
+
+  <div class="panel">
+    <div class="panel-title">Buscar ventas</div>
+    <div class="form-row-grid">
+      <div class="form-row">
+        <label for="fDesde">Desde</label>
+        <input type="date" id="fDesde">
+      </div>
+      <div class="form-row">
+        <label for="fHasta">Hasta</label>
+        <input type="date" id="fHasta">
+      </div>
+      <div class="form-row">
+        <label for="fCliente">Cliente (nombre o teléfono)</label>
+        <input type="text" id="fCliente" placeholder="Ej: María, 0412...">
+      </div>
+    </div>
+    <div style="display:flex; gap:10px; flex-wrap:wrap;">
+      <button class="btn-small" id="btnBuscar">Buscar</button>
+      <button class="btn-danger" id="btnLimpiar">Limpiar filtros</button>
+      <button class="btn-small" id="btnPDF">⬇️ Descargar PDF del periodo</button>
+    </div>
+  </div>
+
+  <div class="panel" id="resumenPanel" style="display:flex; justify-content:space-between; align-items:center;">
+    <span id="resumenTexto">0 ventas encontradas</span>
+    <span class="cart-total-row" style="margin:0;"><span class="amount" id="resumenTotal">$0.00</span></span>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Fecha</th><th>Cajero</th><th>Cliente</th><th>Items</th><th>Total</th><th></th></tr>
+      </thead>
+      <tbody id="ventasBody"></tbody>
+    </table>
+  </div>
+
+</div>
+
+<div id="printArea"></div>
+
+<div class="overlay" id="detalleOverlay">
+  <div class="receipt-modal">
+    <div class="receipt-icon">🧾</div>
+    <div class="receipt-title">Detalle de venta</div>
+    <div class="receipt-sub" id="detalleSub"></div>
+    <div class="receipt-list" id="detalleList"></div>
+    <div class="receipt-total"><span>Total</span><span id="detalleTotal"></span></div>
+    <button class="btn-secondary" onclick="document.getElementById('detalleOverlay').classList.remove('open')">Cerrar</button>
+  </div>
+</div>
+
+
+<script src="js/store.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/productos.js"></script>
+<script src="js/historial.js"></script>
+</body>
+</html>

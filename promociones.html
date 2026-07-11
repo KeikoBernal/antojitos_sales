@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Promociones — Antojito's Cakes</title>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Bodoni+Moda:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.cdnfonts.com/css/angel-club" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="header">
+  <div class="header-stripe"></div>
+  <div class="header-row">
+    <div class="header-brand">
+      <img src="imagenes/logo_badge.png" alt="Antojito's Cakes">
+      <div>
+        <div class="header-title">Antojito's Cakes</div>
+        <div class="header-sub">Módulo de Ventas</div>
+      </div>
+    </div>
+    <div class="header-user">
+      <div class="header-user-name" id="headerUserName">—<span class="header-user-role" id="headerUserRole"></span></div>
+      <button class="logout-btn" onclick="logout()">Salir</button>
+    </div>
+  </div>
+</header>
+
+<nav class="nav-wrap">
+  <a href="ventas.html" class="nav-tab" data-nav-section="ventas">🧾 Ventas</a>
+  <a href="clientes.html" class="nav-tab" data-nav-section="clientes">👥 Clientes</a>
+  <a href="precios.html" class="nav-tab" data-nav-section="precios">💲 Precios</a>
+  <a href="inventario.html" class="nav-tab" data-nav-section="inventario">📦 Inventario</a>
+  <a href="promociones.html" class="nav-tab active" data-nav-section="promociones">🎁 Promociones</a>
+  <a href="pedidos.html" class="nav-tab" data-nav-section="pedidos">📅 Pedidos</a>
+  <a href="historial.html" class="nav-tab" data-nav-section="historial">📖 Historial</a>
+  <a href="reportes.html" class="nav-tab" data-nav-section="reportes">📊 Reportes</a>
+  <a href="auditoria.html" class="nav-tab" data-nav-section="auditoria">📋 Auditoría</a>
+  <a href="respaldo.html" class="nav-tab" data-nav-section="respaldo">💾 Respaldo</a>
+</nav>
+
+<div class="page">
+
+  <div class="panel" id="bannerPanel">
+    <div class="panel-title">Banner promocional</div>
+    <div class="toggle-row">
+      <label class="switch"><input type="checkbox" id="bannerActive"><span class="slider"></span></label>
+      <span>Mostrar banner en la pantalla de ventas</span>
+    </div>
+    <div class="form-row">
+      <label for="bannerTitle">Título</label>
+      <input type="text" id="bannerTitle" placeholder="Ej: ¡Promo del mes!">
+    </div>
+    <div class="form-row">
+      <label for="bannerSubtitle">Subtítulo</label>
+      <input type="text" id="bannerSubtitle" placeholder="Ej: Compra 2 tortas y llévate un café gratis">
+    </div>
+    <div class="form-row">
+      <label for="bannerTheme">Estilo</label>
+      <select id="bannerTheme">
+        <option value="rosa">Rosa (marca)</option>
+        <option value="dorado">Dorado (edición especial)</option>
+      </select>
+    </div>
+    <button class="btn-primary" id="saveBannerBtn" style="max-width:220px">Guardar banner</button>
+  </div>
+
+  <div class="panel" id="rulesPanel">
+    <div class="panel-title">Reglas de promoción · "Compra N, llévate M gratis"</div>
+    <div id="rulesList"></div>
+
+    <form id="ruleForm" style="margin-top:16px; border-top:1px solid #f5eaf1; padding-top:16px;">
+      <div class="form-row">
+        <label for="triggerProduct">Producto que activa la promoción</label>
+        <select id="triggerProduct" required></select>
+      </div>
+      <div class="form-row">
+        <label for="buyQty">Cantidad requerida</label>
+        <input type="number" id="buyQty" min="1" value="2" required>
+      </div>
+      <div class="form-row">
+        <label for="rewardProduct">Producto de regalo</label>
+        <select id="rewardProduct" required></select>
+      </div>
+      <div class="form-row">
+        <label for="rewardQty">Cantidad de regalo</label>
+        <input type="number" id="rewardQty" min="1" value="1" required>
+      </div>
+      <button type="submit" class="btn-primary" style="max-width:220px">Agregar regla</button>
+    </form>
+  </div>
+
+  <div class="panel" id="descuentosPanel">
+    <div class="panel-title">Descuentos por porcentaje</div>
+    <div id="descuentosList"></div>
+
+    <form id="descuentoForm" style="margin-top:16px; border-top:1px solid #f5eaf1; padding-top:16px;">
+      <div class="form-row">
+        <label for="descuentoProduct">Producto con descuento</label>
+        <select id="descuentoProduct" required></select>
+      </div>
+      <div class="form-row">
+        <label for="descuentoPct">Porcentaje de descuento</label>
+        <input type="number" id="descuentoPct" min="1" max="90" value="10" required>
+      </div>
+      <button type="submit" class="btn-primary" style="max-width:220px">Agregar descuento</button>
+    </form>
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="js/store.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/productos.js"></script>
+<script src="js/promos.js"></script>
+<script src="js/promociones.js"></script>
+</body>
+</html>

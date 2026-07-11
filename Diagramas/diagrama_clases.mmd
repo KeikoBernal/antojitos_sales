@@ -1,0 +1,83 @@
+classDiagram
+    class Usuario {
+        +String username
+        +String nombre
+        +String rol
+        +String passwordHash
+    }
+
+    class Sesion {
+        +String username
+        +String nombre
+        +String rol
+        +Number ts
+    }
+
+    class Cliente {
+        +String id
+        +String nombre
+        +String telefono
+        +String email
+    }
+
+    class Venta {
+        +String id
+        +String fecha
+        +String cajero
+        +String clienteId
+        +Number total
+    }
+
+    class ItemVenta {
+        +String productId
+        +String name
+        +String variante
+        +Number precio
+        +Number qty
+        +Boolean gratis
+    }
+
+    class Producto {
+        +String id
+        +String cat
+        +String name
+        +String img
+        +String badgeColor
+    }
+
+    class VarianteProducto {
+        +String label
+        +Number price
+    }
+
+    class Categoria {
+        +String cat
+        +String label
+    }
+
+    class ReglaPromocion {
+        +String id
+        +Boolean active
+        +String triggerProductId
+        +String triggerProductName
+        +Number buyQty
+        +String rewardProductId
+        +Number rewardQty
+    }
+
+    class Banner {
+        +Boolean active
+        +String title
+        +String subtitle
+        +String theme
+    }
+
+    Usuario "1" --> "0..1" Sesion : inicia
+    Usuario "1" --> "0..*" Venta : registra (cajero)
+    Cliente "1" --> "0..*" Venta : realiza
+    Venta "1" *-- "1..*" ItemVenta : contiene
+    ItemVenta "0..*" --> "1" Producto : referencia
+    Producto "1" *-- "1..*" VarianteProducto : ofrece
+    Producto "0..*" --> "1" Categoria : pertenece a
+    ReglaPromocion "0..*" --> "1" Producto : activador (trigger)
+    ReglaPromocion "0..*" --> "1" Producto : regalo (reward)

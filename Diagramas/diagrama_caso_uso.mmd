@@ -1,0 +1,84 @@
+flowchart LR
+    Cajero(["Cajero"])
+    Admin(["Administrador"])
+
+    subgraph SESION["Sesión"]
+        direction TB
+        UC1(["Iniciar sesión"])
+        UC2(["Cerrar sesión"])
+    end
+
+    subgraph VENTAS["Ventas"]
+        direction TB
+        UC3(["Buscar y filtrar<br/>productos del catálogo"])
+        UC4(["Agregar producto al carrito"])
+        UC5(["Aplicar promoción<br/>automática al carrito"])
+        UC6(["Finalizar venta"])
+        UC7(["Ver recibo de venta"])
+    end
+
+    subgraph CLIENTES["Clientes"]
+        direction TB
+        UC8(["Registrar cliente nuevo"])
+        UC9(["Buscar cliente"])
+        UC10(["Editar datos de un cliente"])
+        UC11(["Eliminar cliente"])
+    end
+
+    subgraph PRECIOS["Precios (solo Administrador)"]
+        direction TB
+        UC12(["Editar precio de una presentación"])
+        UC13(["Restablecer precio original"])
+    end
+
+    subgraph PROMOS["Promociones (solo Administrador)"]
+        direction TB
+        UC14(["Configurar banner promocional"])
+        UC15(["Crear regla 'compra N, llévate M gratis'"])
+        UC16(["Activar / desactivar regla"])
+        UC17(["Eliminar regla de promoción"])
+    end
+
+    subgraph REPORTES["Historial y Reportes (solo Administrador)"]
+        direction TB
+        UC18(["Consultar historial de ventas<br/>por cliente / periodo"])
+        UC19(["Descargar PDF de ventas del periodo"])
+        UC20(["Consultar ranking de productos<br/>más y menos vendidos"])
+        UC21(["Descargar PDF del reporte de productos"])
+    end
+
+    subgraph RESPALDO["Respaldo (solo Administrador)"]
+        direction TB
+        UC22(["Descargar respaldo .json"])
+        UC23(["Restaurar datos desde un archivo"])
+    end
+
+    Cajero --> UC1
+    Cajero --> UC2
+    Cajero --> UC3
+    Cajero --> UC4
+    Cajero --> UC6
+    Cajero --> UC7
+    Cajero --> UC8
+    Cajero --> UC9
+    Cajero --> UC10
+    Cajero --> UC11
+
+    Admin -.->|"hereda todos los<br/>casos de uso de"| Cajero
+    Admin --> UC12
+    Admin --> UC13
+    Admin --> UC14
+    Admin --> UC15
+    Admin --> UC16
+    Admin --> UC17
+    Admin --> UC18
+    Admin --> UC19
+    Admin --> UC20
+    Admin --> UC21
+    Admin --> UC22
+    Admin --> UC23
+
+    UC6 -.->|"«include»"| UC5
+    UC19 -.->|"«extend»"| UC18
+    UC21 -.->|"«extend»"| UC20
+    UC13 -.->|"«extend»"| UC12

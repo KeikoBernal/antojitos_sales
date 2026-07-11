@@ -1,0 +1,62 @@
+flowchart LR
+    CAJ["Cajero"]
+    ADM["Administrador"]
+
+    P1((("1.0<br/>Autenticar<br/>usuario")))
+    P2((("2.0<br/>Gestionar<br/>clientes")))
+    P3((("3.0<br/>Procesar<br/>venta")))
+    P4((("4.0<br/>Aplicar promociones<br/>y banner")))
+    P5((("5.0<br/>Administrar<br/>precios")))
+    P6((("6.0<br/>Generar historial<br/>y reportes")))
+    P7((("7.0<br/>Respaldar y<br/>restaurar datos")))
+
+    D1[["D1  Usuarios"]]
+    D2[["D2  Clientes"]]
+    D3[["D3  Ventas"]]
+    D4[["D4  Precios (overrides)"]]
+    D5[["D5  Reglas de promoción"]]
+    D6[["D6  Banner"]]
+    D7[["D7  Sesión activa"]]
+    D8[["D8  Carrito actual"]]
+
+    CAJ -->|"usuario, contraseña"| P1
+    ADM -->|"usuario, contraseña"| P1
+    P1 -->|"sesión iniciada / error"| CAJ
+    P1 -->|"sesión iniciada / error"| ADM
+    D1 -->|"credenciales"| P1
+    P1 <-->|"guarda / lee sesión"| D7
+
+    CAJ -->|"datos de cliente<br/>nuevo o editado"| P2
+    ADM -->|"edición o eliminación<br/>de cliente"| P2
+    P2 -->|"lista y ficha<br/>del cliente"| CAJ
+    P2 <-->|"lee / escribe"| D2
+
+    CAJ -->|"productos elegidos,<br/>cliente de la venta"| P3
+    P3 -->|"recibo de venta"| CAJ
+    P3 <-->|"guarda / recupera carrito"| D8
+    P3 -->|"registra venta"| D3
+    D2 -.->|"datos del cliente<br/>elegido"| P3
+    D4 -.->|"precio vigente"| P3
+    P3 -->|"líneas del carrito"| P4
+    P4 -->|"regalos aplicables"| P3
+
+    ADM -->|"nuevo precio<br/>por presentación"| P5
+    P5 <-->|"lee / escribe"| D4
+
+    ADM -->|"reglas de promoción,<br/>configuración del banner"| P4
+    P4 <-->|"lee / escribe"| D5
+    P4 <-->|"lee / escribe"| D6
+
+    ADM -->|"filtro de periodo<br/>(desde / hasta)"| P6
+    D3 -.->|"ventas del periodo"| P6
+    D2 -.->|"nombre y cédula<br/>del cliente"| P6
+    P6 -->|"PDF de historial<br/>o de reporte"| ADM
+
+    ADM -->|"solicitud de respaldo<br/>o restauración"| P7
+    P7 -->|"archivo .json<br/>de respaldo"| ADM
+    P7 <-->|"lee / escribe"| D1
+    P7 <-->|"lee / escribe"| D2
+    P7 <-->|"lee / escribe"| D3
+    P7 <-->|"lee / escribe"| D4
+    P7 <-->|"lee / escribe"| D5
+    P7 <-->|"lee / escribe"| D6

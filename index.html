@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Antojito's Cakes — Módulo de Ventas</title>
+<script src="js/store.js"></script>
+<script src="js/auth.js"></script>
+<script>
+  seedIfEmpty();
+  var session = getSession();
+  if (session) {
+    window.location.replace(puedeAcceder(session.rol, 'ventas') ? 'ventas.html' : 'clientes.html');
+  } else {
+    window.location.replace('login.html');
+  }
+</script>
+</head>
+<body></body>
+</html>

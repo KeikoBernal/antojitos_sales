@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clientes — Antojito's Cakes</title>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Bodoni+Moda:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.cdnfonts.com/css/angel-club" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="header">
+  <div class="header-stripe"></div>
+  <div class="header-row">
+    <div class="header-brand">
+      <img src="imagenes/logo_badge.png" alt="Antojito's Cakes">
+      <div>
+        <div class="header-title">Antojito's Cakes</div>
+        <div class="header-sub">Módulo de Ventas</div>
+      </div>
+    </div>
+    <div class="header-user">
+      <div class="header-user-name" id="headerUserName">—<span class="header-user-role" id="headerUserRole"></span></div>
+      <button class="logout-btn" onclick="logout()">Salir</button>
+    </div>
+  </div>
+</header>
+
+<nav class="nav-wrap">
+  <a href="ventas.html" class="nav-tab" data-nav-section="ventas">🧾 Ventas</a>
+  <a href="clientes.html" class="nav-tab active" data-nav-section="clientes">👥 Clientes</a>
+  <a href="precios.html" class="nav-tab" data-nav-section="precios">💲 Precios</a>
+  <a href="inventario.html" class="nav-tab" data-nav-section="inventario">📦 Inventario</a>
+  <a href="promociones.html" class="nav-tab" data-nav-section="promociones">🎁 Promociones</a>
+  <a href="pedidos.html" class="nav-tab" data-nav-section="pedidos">📅 Pedidos</a>
+  <a href="historial.html" class="nav-tab" data-nav-section="historial">📖 Historial</a>
+  <a href="reportes.html" class="nav-tab" data-nav-section="reportes">📊 Reportes</a>
+  <a href="auditoria.html" class="nav-tab" data-nav-section="auditoria">📋 Auditoría</a>
+  <a href="respaldo.html" class="nav-tab" data-nav-section="respaldo">💾 Respaldo</a>
+</nav>
+
+<div class="page">
+  <div class="panel">
+    <div class="panel-title" id="clienteFormTitle">Registrar nuevo comprador</div>
+    <form id="clienteForm">
+      <input type="hidden" id="clienteId" value="">
+      <div class="form-error" id="clienteError"></div>
+      <div class="form-row">
+        <label for="nombre">Nombre completo</label>
+        <input type="text" id="nombre" required>
+      </div>
+      <div class="form-row">
+        <label for="cedula">Cédula</label>
+        <input type="text" id="cedula" placeholder="Ej: 12345678" inputmode="numeric" pattern="[0-9]*" maxlength="15" required>
+      </div>
+      <div class="form-row">
+        <label for="telefono">Teléfono</label>
+        <input type="tel" id="telefono" placeholder="Ej: 04121234567" inputmode="numeric" pattern="[0-9]*" maxlength="15" required>
+      </div>
+      <div class="form-row">
+        <label for="email">Correo (opcional)</label>
+        <input type="email" id="email">
+      </div>
+      <div style="display:flex; gap:10px;">
+        <button type="submit" class="btn-primary" id="clienteSubmitBtn" style="max-width:260px">Registrar cliente</button>
+        <button type="button" class="btn-secondary" id="clienteCancelBtn" style="max-width:180px; display:none;">Cancelar edición</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="search-box">
+    <input type="text" id="searchInput" placeholder="Buscar por nombre, cédula o teléfono...">
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Nombre</th><th>Cédula</th><th>Teléfono</th><th>Compras</th><th>Total gastado</th><th>Última compra</th><th></th></tr>
+      </thead>
+      <tbody id="clientesBody"></tbody>
+    </table>
+  </div>
+
+  <div id="historialWrap"></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="js/store.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/productos.js"></script>
+<script src="js/clientes.js"></script>
+</body>
+</html>
